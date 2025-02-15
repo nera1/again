@@ -32,7 +32,7 @@ interface TableTextNode {
   children?: TableTextNode[];
 }
 
-const refColumns = ["Name", "Stack", "Last", "Next"];
+const refColumns = ["Name", "Level", "Stack", "Last", "Next"];
 
 function checkTableColumns(ref: string[], comp: string[]) {
   if (ref.length !== comp.length) {
