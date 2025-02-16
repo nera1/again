@@ -1,3 +1,8 @@
-#root {
-  background-color: darkblue;
+@use "./styles/variables" as variables;
+
+.container {
+  margin-top: variables.$HEADER_HEIGHT;
+  width: 100%;
+  min-height: 100vh;
+  background-color: transparent;
 }

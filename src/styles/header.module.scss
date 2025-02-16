@@ -1,0 +1,11 @@
+@use "variables";
+
+.header {
+  height: variables.$HEADER_HEIGHT;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  position: fixed;
+  left: 0;
+  top: 0;
+}
