@@ -1,10 +1,13 @@
-$HEADER_HEIGHT: 42px;
-$WIDTH_CONTAINER: 780px;
+$HEADER_HEIGHT: 54px;
+$PADDING_ASIDE: 12px;
+
+$WIDTH_CONTAINER: 768px;
+$PADDING_CONTAINER_TOP: 18px;
 
 $breakpoint: $WIDTH_CONTAINER;
 
 @mixin background {
-  background-image: linear-gradient(60deg, #29323c 0%, #485563 100%);
+  background-image: linear-gradient(to right, #434343 0%, black 100%);
 }
 
 @mixin media-sm {

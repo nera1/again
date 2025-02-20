@@ -3,6 +3,8 @@
 .container {
   margin-top: variables.$HEADER_HEIGHT;
   width: 100%;
+  max-width: variables.$WIDTH_CONTAINER;
   min-height: 100vh;
-  background-color: transparent;
+  padding: 0 variables.$PADDING_ASIDE;
+  padding-top: variables.$PADDING_CONTAINER_TOP;
 }
