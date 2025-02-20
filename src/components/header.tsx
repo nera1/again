@@ -1,4 +1,4 @@
-import { FunctionComponent, useState } from "react";
+import { FunctionComponent } from "react";
 import { Button } from "@/components/ui/button";
 
 import { ChevronRight, Menu } from "lucide-react";
