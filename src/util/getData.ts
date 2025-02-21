@@ -99,11 +99,13 @@ function traverse(root: Root): TableData[] {
 }
 
 export default function getData() {
-  fetch("https://raw.githubusercontent.com/nera1/CCT/refs/heads/main/README.md")
+  return fetch(
+    "https://raw.githubusercontent.com/nera1/CCT/refs/heads/main/README.md"
+  )
     .then((result) => result.text())
     .then((data) => {
       const tree = ast(data);
       const tables = traverse(tree);
-      console.log(tables);
+      return tables;
     });
 }

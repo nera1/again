@@ -1,11 +1,12 @@
 import { FunctionComponent } from "react";
 import { Button } from "@/components/ui/button";
 
-import { ChevronRight, Menu } from "lucide-react";
+import { ChevronRight } from "lucide-react";
 
-import LogoSymbol from "./icons/logo-symbol";
+import LogoSymbol from "../icons/logo-symbol";
 
-import styles from "../styles/header.module.scss";
+import styles from "../../styles/header.module.scss";
+import HeaderMenu from "./header-menu";
 
 const Header: FunctionComponent = () => {
   return (
@@ -19,10 +20,8 @@ const Header: FunctionComponent = () => {
         <div className={styles["center"]}>
           <LogoSymbol />
         </div>
-        <div className={styles["right"]}>
-          <Button variant="outline" size="icon">
-            <Menu />
-          </Button>
+        <div className={`${styles["right"]} group`}>
+          <HeaderMenu />
         </div>
       </div>
     </header>

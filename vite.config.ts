@@ -4,6 +4,13 @@ import path from "path";
 
 export default defineConfig({
   base: "",
+  css: {
+    preprocessorOptions: {
+      scss: {
+        silenceDeprecations: ["legacy-js-api"],
+      },
+    },
+  },
   plugins: [react()],
   resolve: {
     alias: {

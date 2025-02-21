@@ -1,16 +1,32 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 import getData from "./util/getData";
-import Header from "./components/header";
+import Header from "./components/header/header";
 
 import { ThemeProvider } from "./components/theme-provider/theme-provider";
 
+import { ClassifiedProblems, Problem, sortProblemData } from "./util/sortData";
+
 import styles from "./App.module.scss";
+import CollapsibleContainer from "./components/collapsible-container/collapsible-container";
 
 function App() {
-  useEffect(() => {
-    getData();
+  const [appState, setAppState] = useState<ClassifiedProblems>({
+    done: [],
+    missed: [],
+    today: [],
+    nextup: [],
   });
+
+  useEffect(() => {
+    getData().then((data) =>
+      setAppState(sortProblemData(data as unknown as Problem[][]))
+    );
+  }, []);
+
+  useEffect(() => {
+    console.log(appState);
+  }, [appState]);
 
   const today = new Date();
   const formattedDate = new Intl.DateTimeFormat("en-US", {
@@ -23,21 +39,23 @@ function App() {
   return (
     <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
       <Header />
-      <div className={styles["container"]}>
-        <h2 className="text-3xl font-bold tracking-tight">Today's</h2>
-        <p className="text-sm mt-2 text-muted-foreground">{formattedDate}</p>
-        <h2 className="text-3xl font-bold tracking-tight">Missed</h2>
-        <p className="text-sm mt-2 text-muted-foreground">
-          Skipped or unsolved problems
-        </p>
-        <h2 className="text-3xl font-bold tracking-tight">Next up</h2>
-        <p className="text-sm mt-2 text-muted-foreground">
-          Problems coming soon
-        </p>
-        <h2 className="text-3xl font-bold tracking-tight">Solved</h2>
-        <p className="text-sm mt-2 text-muted-foreground">
-          Already solved problems
-        </p>
+      <div className={`${styles["container"]} flex flex-col gap-y-5`}>
+        <CollapsibleContainer
+          title="Today's"
+          description={formattedDate}
+        ></CollapsibleContainer>
+        <CollapsibleContainer
+          title="Missed"
+          description="Skipped or unsolved problems"
+        ></CollapsibleContainer>
+        <CollapsibleContainer
+          title="Next up"
+          description="Problems coming soon"
+        ></CollapsibleContainer>
+        <CollapsibleContainer
+          title="Solved"
+          description="Already solved problems"
+        ></CollapsibleContainer>
       </div>
     </ThemeProvider>
   );
