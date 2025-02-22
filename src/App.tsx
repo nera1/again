@@ -46,11 +46,15 @@ function App() {
   });
 
   useEffect(() => {
-    const today = new Date().toISOString().slice(0, 10);
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = String(today.getMonth() + 1).padStart(2, "0");
+    const date = String(today.getDate()).padStart(2, "0");
+    const todayDate = `${year}-${month}-${date}`;
     getData().then((data) =>
       setAppState((prev) => ({
         ...prev,
-        ...sortProblemData(data as unknown as Problem[][], today),
+        ...sortProblemData(data as unknown as Problem[][], todayDate),
         onLoad: true,
       }))
     );
