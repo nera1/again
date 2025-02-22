@@ -46,10 +46,11 @@ function App() {
   });
 
   useEffect(() => {
+    const today = new Date().toISOString().slice(0, 10);
     getData().then((data) =>
       setAppState((prev) => ({
         ...prev,
-        ...sortProblemData(data as unknown as Problem[][]),
+        ...sortProblemData(data as unknown as Problem[][], today),
         onLoad: true,
       }))
     );
