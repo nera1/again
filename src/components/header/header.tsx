@@ -5,10 +5,20 @@ import { ChevronRight } from "lucide-react";
 
 import LogoSymbol from "../icons/logo-symbol";
 
-import styles from "../../styles/header.module.scss";
 import HeaderMenu from "./header-menu";
 
-const Header: FunctionComponent = () => {
+import styles from "../../styles/header.module.scss";
+
+export type Toggle = {
+  handler: Function;
+  value: boolean;
+};
+
+interface Header {
+  toggle?: Toggle;
+}
+
+const Header: FunctionComponent<Header> = ({ toggle }) => {
   return (
     <header className={styles["header"]}>
       <div className={styles["container"]}>
@@ -21,7 +31,7 @@ const Header: FunctionComponent = () => {
           <LogoSymbol />
         </div>
         <div className={`${styles["right"]} group`}>
-          <HeaderMenu />
+          <HeaderMenu toggle={toggle} />
         </div>
       </div>
     </header>

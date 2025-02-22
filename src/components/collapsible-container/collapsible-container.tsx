@@ -15,14 +15,16 @@ export type CollapsibleContainer = {
   title: string;
   description: string;
   children?: ReactNode;
+  isCollapsed?: boolean;
 };
 
 export default function CollapsibleContainer({
   title,
   description,
   children,
+  isCollapsed = true,
 }: CollapsibleContainer) {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(!isCollapsed);
 
   return (
     <Collapsible open={open} onOpenChange={setOpen}>

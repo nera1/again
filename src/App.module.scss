@@ -5,6 +5,14 @@
   width: 100%;
   max-width: variables.$WIDTH_CONTAINER;
   min-height: 100vh;
-  padding: 0 variables.$PADDING_ASIDE;
   padding-top: variables.$PADDING_CONTAINER_TOP;
+  padding-left: variables.$PADDING_ASIDE;
+  padding-right: variables.$PADDING_ASIDE;
+  padding-bottom: variables.$PADDING_CONTAINER_BOTTOM;
+}
+
+@include variables.media-sm {
+}
+
+@include variables.media-lg {
 }

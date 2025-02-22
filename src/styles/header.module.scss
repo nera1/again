@@ -10,14 +10,14 @@
   top: 0;
   backdrop-filter: blur(5px);
   box-sizing: border-box;
-  padding: 0 variables.$PADDING_ASIDE;
   border-bottom: 0.5px solid #171717;
 
   & > .container {
     display: flex;
     width: 100%;
     max-width: variables.$WIDTH_CONTAINER;
-
+    padding-left: variables.$PADDING_ASIDE;
+    padding-right: variables.$PADDING_ASIDE;
     & > .center {
       flex-grow: 1;
       justify-content: center;

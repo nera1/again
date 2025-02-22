@@ -7,26 +7,57 @@ import { ThemeProvider } from "./components/theme-provider/theme-provider";
 
 import { ClassifiedProblems, Problem, sortProblemData } from "./util/sortData";
 
-import styles from "./App.module.scss";
 import CollapsibleContainer from "./components/collapsible-container/collapsible-container";
+import ProblemItem from "./components/problem/problem";
+
+import styles from "./App.module.scss";
+
+interface AppState extends ClassifiedProblems {
+  ghost: boolean;
+  onLoad: boolean;
+}
+
+function Empty() {
+  return (
+    <div className="p-6 flex justify-center">
+      <small className="text-sm font-medium leading-none text-muted-foreground">
+        Empty
+      </small>
+    </div>
+  );
+}
+
+function Loading() {
+  return (
+    <div className="p-6 flex justify-center">
+      <div className="animate-spin h-8 w-8 border-4 border-t-transparent rounded-full"></div>
+    </div>
+  );
+}
 
 function App() {
-  const [appState, setAppState] = useState<ClassifiedProblems>({
+  const [appState, setAppState] = useState<AppState>({
     done: [],
     missed: [],
     today: [],
     nextup: [],
+    ghost: false,
+    onLoad: false,
   });
 
   useEffect(() => {
     getData().then((data) =>
-      setAppState(sortProblemData(data as unknown as Problem[][]))
+      setAppState((prev) => ({
+        ...prev,
+        ...sortProblemData(data as unknown as Problem[][]),
+        onLoad: true,
+      }))
     );
   }, []);
 
-  useEffect(() => {
-    console.log(appState);
-  }, [appState]);
+  function toggleColorMode() {
+    setAppState((prev) => ({ ...prev, ghost: !prev.ghost }));
+  }
 
   const today = new Date();
   const formattedDate = new Intl.DateTimeFormat("en-US", {
@@ -38,24 +69,105 @@ function App() {
 
   return (
     <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
-      <Header />
+      <Header toggle={{ handler: toggleColorMode, value: appState.ghost }} />
       <div className={`${styles["container"]} flex flex-col gap-y-5`}>
         <CollapsibleContainer
           title="Today's"
           description={formattedDate}
-        ></CollapsibleContainer>
+          isCollapsed={false}
+        >
+          <ul className="p-0 m-0 flex flex-col gap-y-3">
+            <ul className="p-0 m-0 flex flex-col gap-y-3">
+              {appState.onLoad ? (
+                appState.today.length ? (
+                  appState.today.map((item, index) => (
+                    <ProblemItem
+                      {...item}
+                      key={`t_${index}`}
+                      ghost={appState.ghost}
+                    />
+                  ))
+                ) : (
+                  <Empty />
+                )
+              ) : (
+                <Loading />
+              )}
+            </ul>
+          </ul>
+        </CollapsibleContainer>
         <CollapsibleContainer
           title="Missed"
           description="Skipped or unsolved problems"
-        ></CollapsibleContainer>
+        >
+          <ul className="p-0 m-0 flex flex-col gap-y-3">
+            <ul className="p-0 m-0 flex flex-col gap-y-3">
+              {appState.onLoad ? (
+                appState.missed.length ? (
+                  appState.missed.map((item, index) => (
+                    <ProblemItem
+                      {...item}
+                      key={`m_${index}`}
+                      ghost={appState.ghost}
+                    />
+                  ))
+                ) : (
+                  <Empty />
+                )
+              ) : (
+                <Loading />
+              )}
+            </ul>
+          </ul>
+        </CollapsibleContainer>
         <CollapsibleContainer
           title="Next up"
           description="Problems coming soon"
-        ></CollapsibleContainer>
+        >
+          <ul className="p-0 m-0 flex flex-col gap-y-3">
+            <ul className="p-0 m-0 flex flex-col gap-y-3">
+              {appState.onLoad ? (
+                appState.nextup.length ? (
+                  appState.nextup.map((item, index) => (
+                    <ProblemItem
+                      {...item}
+                      key={`n_${index}`}
+                      ghost={appState.ghost}
+                    />
+                  ))
+                ) : (
+                  <Empty />
+                )
+              ) : (
+                <Loading />
+              )}
+            </ul>
+          </ul>
+        </CollapsibleContainer>
         <CollapsibleContainer
           title="Solved"
           description="Already solved problems"
-        ></CollapsibleContainer>
+        >
+          <ul className="p-0 m-0 flex flex-col gap-y-3">
+            <ul className="p-0 m-0 flex flex-col gap-y-3">
+              {appState.onLoad ? (
+                appState.done.length ? (
+                  appState.done.map((item, index) => (
+                    <ProblemItem
+                      {...item}
+                      key={`d_${index}`}
+                      ghost={appState.ghost}
+                    />
+                  ))
+                ) : (
+                  <Empty />
+                )
+              ) : (
+                <Loading />
+              )}
+            </ul>
+          </ul>
+        </CollapsibleContainer>
       </div>
     </ThemeProvider>
   );
