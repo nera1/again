@@ -47,6 +47,10 @@ export function sortProblemData(
     }
   });
 
+  missed.sort(
+    (a, b) => new Date(a.Next).getTime() - new Date(b.Next).getTime()
+  );
+
   return {
     today,
     missed,
