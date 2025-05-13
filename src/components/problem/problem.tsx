@@ -133,6 +133,7 @@ const Problem: FunctionComponent<ProblemComponent> = (props) => {
     Last,
     Stack,
     Next,
+    Related,
     ghost = false,
   } = props;
   const stack = Stack.split("");
@@ -171,10 +172,25 @@ const Problem: FunctionComponent<ProblemComponent> = (props) => {
           style={{ color: ghost ? "#a3a3a3" : "#f5f5f5" }}
         >{`${ordinal(stack.length)} attempt`}</div>
       </div>
-      <div className="tracking-tight text-sm font-normal"></div>
       <a className="text-2xl font-bold" href={url} target="_blank">
         {tag}
       </a>
+      <div className="tracking-tight text-sm font-normal flex gap-x-1 text-neutral-200">
+        {Related.length > 0 ? "Related: " : ""}
+        {Related.length > 0 ? (
+          Related.map((item, idx) => (
+            <a
+              className="hover:underline after:content-[','] last:after:content-['']"
+              href={item.url}
+              key={item.url + "_" + idx}
+            >
+              {item.tag}
+            </a>
+          ))
+        ) : (
+          <></>
+        )}
+      </div>
     </li>
   );
 };

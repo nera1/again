@@ -1,12 +1,15 @@
+export interface Link {
+  url: string;
+  tag: string;
+}
+
 export interface Problem {
-  Name: {
-    url: string;
-    tag: string;
-  };
+  Name: Link;
   Level: string;
   Stack: string;
   Last: string;
   Next: string;
+  Related: Link[];
 }
 
 export interface ClassifiedProblems {
